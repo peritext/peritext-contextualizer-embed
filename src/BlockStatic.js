@@ -1,23 +1,37 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({
+const BlockStatic = ({
   resource,
   // contextualizer,
   // contextualization
-}) => {
-  if (resource.data.thumbnail) {
+}, {datasets}) => {
+  const data = resource.data;
+  const thumbnail = datasets[data.thumbnailDataset];
+  if (thumbnail) {
     return (
     <figure className="resource-thumbnail peritext-contextualization peritext-contextualization-block peritext-contextualization-codex peritext-contextualizer-embed">
       <img 
-        src={resource.data.thumbnail}
+        src={thumbnail.uri}
       />
     </figure>
-    )
+    );
   }
-  else return (
-  <figure
-    className="peritext-contextualization peritext-contextualization-block peritext-contextualization-codex peritext-contextualizer-embed"
-    dangerouslySetInnerHTML={{
-      __html: resource.data.html
-    }} />
-)}
+  else return data.html ? (
+    <figure
+      className="peritext-contextualization peritext-contextualization-block peritext-contextualization-codex peritext-contextualizer-embed"
+      dangerouslySetInnerHTML={{
+        __html: data.html
+      }} />
+  ) : null;
+};
+
+BlockStatic.propTypes = {
+  resource: PropTypes.object,
+};
+
+BlockStatic.contextTypes = {
+  datasets: PropTypes.object,
+}
+
+export default BlockStatic;
