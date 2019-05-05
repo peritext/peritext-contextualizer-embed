@@ -22,7 +22,8 @@
     "react-dom": "^16.7.0-alpha"
   },
   "dependencies": {
-    "peritext-utils": "^0.1.0"
+    "peritext-utils": "^0.1.0",
+    "react-full-screen": "^0.2.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
