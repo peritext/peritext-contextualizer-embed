@@ -64,7 +64,7 @@ const Block = ( {
 
   let assetUri;
   let activeAssetField = coverField;
-  let Content = null;
+  let Content = () => null;
   if (renderingMode === 'paged') {
     if ( coverAsset && coverAsset.asset ) {
       assetUri = coverAsset.asset.data;
