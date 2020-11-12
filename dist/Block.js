@@ -9,7 +9,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _reactFullScreen = _interopRequireDefault(require("react-full-screen"));
+var _reactFullScreen = require("react-full-screen");
 
 var _meta = _interopRequireDefault(require("./meta"));
 
@@ -19,14 +19,86 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+/*
+class FullableEmbed extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFullScreen: false
+    }
+  }
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return (this.props.html !== nextProps.html) || (this.state.isFullScreen !== nextState.isFullScreen);
+  }
+  setFullScreen = (to) => {
+    this.setState({isFullScreen: to})
+  }
+
+  render () {
+    const {
+      props: {
+        html
+      },
+      state: {
+        isFullScreen,
+      },
+      setFullScreen,
+    } = this;
+    const screen = useFullScreenHandle();
+    const reportChange = useCallback((state) => {
+      setFullScreen(state.active)
+    }, [screen]);
+    return [
+      <Fullscreen
+        key={0}
+        handle={screen}
+        onChange={reportChange}
+      >
+      <div
+        dangerouslySetInnerHTML={ {
+          __html: html
+        } }
+      />
+      {isFullScreen && 
+        <button 
+          key={1} 
+          className="fullscreen-btn" 
+          onClick={() => {
+            setFullScreen(false)
+            screen.exit();
+          }}
+        >
+          ❖
+        </button>
+      }
+      </Fullscreen>,
+      <button 
+        key={1} 
+        className="fullscreen-btn" 
+        onClick={() => {
+          setFullScreen(true)
+          screen.enter();
+        }}
+      >
+        ❖
+      </button>
+    ];
+  }
+}*/
 const FullableEmbed = ({
   html
 }) => {
   const [isFullScreen, setFullScreen] = (0, _react.useState)(false);
-  return [_react.default.createElement(_reactFullScreen.default, {
+  const screen = (0, _reactFullScreen.useFullScreenHandle)();
+  const reportChange = (0, _react.useCallback)(state =>
+  /*handle*/
+  {
+    setFullScreen(state.active);
+  }, [screen]);
+  return [_react.default.createElement(_reactFullScreen.FullScreen, {
     key: 0,
-    enabled: isFullScreen,
-    onChange: newVal => setFullScreen(newVal)
+    handle: screen,
+    onChange: reportChange
   }, _react.default.createElement("div", {
     dangerouslySetInnerHTML: {
       /* eslint react/no-danger : 0 */
@@ -35,11 +107,23 @@ const FullableEmbed = ({
   }), isFullScreen && _react.default.createElement("button", {
     key: 1,
     className: "fullscreen-btn",
-    onClick: () => setFullScreen(false)
+    onClick: () => {
+      setFullScreen(false);
+      screen.exit();
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else if (document.documentElement) {
+        document.documentElement.requestFullscreen();
+      }
+    }
   }, "\u2756")), _react.default.createElement("button", {
     key: 1,
     className: "fullscreen-btn",
-    onClick: () => setFullScreen(true)
+    onClick: () => {
+      setFullScreen(true);
+      screen.enter();
+    }
   }, "\u2756")];
 };
 

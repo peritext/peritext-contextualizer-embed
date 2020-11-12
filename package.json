@@ -23,7 +23,7 @@
     "peritext-utils": "^0.2.8"
   },
   "dependencies": {
-    "react-full-screen": "^0.2.4"
+    "react-full-screen": "^0.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
