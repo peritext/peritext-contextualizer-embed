@@ -71,35 +71,43 @@ const Block = ({
     if (coverAsset && coverAsset.asset) {
       assetUri = coverAsset.asset.data;
       activeAssetField = coverField;
-
-      Content = () => _react.default.createElement("img", {
+      return _react.default.createElement("div", {
+        id: contextualization.id,
+        className: `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}`
+      }, _react.default.createElement("img", {
         src: assetUri
-      });
+      }));
     }
   } else if (coverAsset && coverAsset.asset) {
     if (isLocked) {
       assetUri = coverAsset.asset.data;
       activeAssetField = coverField;
-
-      Content = () => _react.default.createElement("div", {
+      return _react.default.createElement("div", {
+        id: contextualization.id,
+        className: `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}`
+      }, _react.default.createElement("div", {
         onClick: () => setLocked(false),
         className: "cover"
       }, _react.default.createElement("img", {
         src: assetUri
-      }), _react.default.createElement("h3", null, title));
+      }), _react.default.createElement("h3", null, title)));
     } else {
       activeAssetField = 'html';
-
-      Content = () => _react.default.createElement(FullableEmbed, {
+      return _react.default.createElement("div", {
+        id: contextualization.id,
+        className: `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}`
+      }, _react.default.createElement(FullableEmbed, {
         html: resource.data.html
-      });
+      }));
     }
   } else {
     activeAssetField = 'html';
-
-    Content = () => _react.default.createElement(FullableEmbed, {
+    return _react.default.createElement("div", {
+      id: contextualization.id,
+      className: `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}`
+    }, _react.default.createElement(FullableEmbed, {
       html: resource.data.html
-    });
+    }));
   }
 
   return _react.default.createElement("div", {

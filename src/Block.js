@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Fullscreen from "react-full-screen";
 
@@ -69,30 +69,50 @@ const Block = ( {
     if ( coverAsset && coverAsset.asset ) {
       assetUri = coverAsset.asset.data;
       activeAssetField = coverField;
-      Content = () => (
-        <img src={ assetUri } />
+      return (
+        <div
+          id={ contextualization.id }
+          className={ `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}` }
+        >
+          <img src={ assetUri } />
+        </div>
       );
     }
   } else if (coverAsset && coverAsset.asset) {
     if (isLocked) {
       assetUri = coverAsset.asset.data;
       activeAssetField = coverField;
-      Content = () => (
-        <div onClick={() => setLocked(false)} className="cover">
-          <img src={assetUri} />
-          <h3>{title}</h3>
+      return (
+        <div
+          id={ contextualization.id }
+          className={ `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}` }
+        >
+          <div onClick={() => setLocked(false)} className="cover">
+            <img src={assetUri} />
+            <h3>{title}</h3>
+          </div>
         </div>
       );
     } else {        
       activeAssetField = 'html';
-      Content = () => (
-        <FullableEmbed html={resource.data.html} />
-      )
+      return (
+        <div
+          id={ contextualization.id }
+          className={ `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}` }
+        >
+          <FullableEmbed html={resource.data.html} />
+        </div>
+      );
     }
   } else {
     activeAssetField = 'html';
-    Content = () => (
-      <FullableEmbed html={resource.data.html} />
+    return (
+      <div
+        id={ contextualization.id }
+        className={ `peritext-contextualization block embed rendering-mode-${renderingMode} asset-field-${activeAssetField}` }
+      >
+        <FullableEmbed html={resource.data.html} />
+      </div>
     );
   }
   return (
